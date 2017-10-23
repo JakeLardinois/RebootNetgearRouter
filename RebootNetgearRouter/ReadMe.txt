@@ -19,3 +19,5 @@ Inside of App.config you need to specify
 
 	Sample execution of telnetenable.exe: 
 		telnetenable 192.168.1.1 E4F4C609C352 myUsername myPassword
+
+You must have a telnet client installed on your machine; in windows 10 this is done via add/remove features.
