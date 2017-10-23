@@ -7,3 +7,11 @@ into the Netgear router (using whatever telnet client is installed on the local 
 
 The idea is that this application can run in a scheduled task on a windows machine and monitor network connectivity
 
+Inside of App.config you need to specify
+	RouterMACAddress which is the MAC Address of the router that you are looking to unlock Telnet.  The property must be all uppercase and no colons ex.:
+		E4F4C609C352
+	RouterUserName which is the admin username of the Router that you are looking to unlock Telnet.
+	Routerpassword which is the password for the RouterUserName specified above.
+
+	Sample execution of telnetenable.exe: 
+		telnetenable 192.168.1.1 E4F4C609C352 myUsername myPassword
