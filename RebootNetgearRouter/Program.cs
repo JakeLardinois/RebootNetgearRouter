@@ -20,18 +20,24 @@ namespace RebootNetgearRouter
 
             if (!connected)
             {
+                Console.WriteLine($@"There appears to be a problem with Network Connectivity...");
+                Console.WriteLine($@"A NO Ping Response was received from {Settings.DestinationPingAddress}...");
+
+                Console.WriteLine(@"Let's enable Telnet on the Router...");
                 var telnetEnabled = EnableTelnet();
                 if (telnetEnabled)
                 {
                     Console.WriteLine($@"Telnet was successfully enabled on the Router.");
+
+                    Console.WriteLine(@"Now let's telnet into the Router and reboot it...");
                     var successfulReboot = RebootRouter();
                     if (successfulReboot)
-                        Console.WriteLine(@"The Router is being successfully rebooted");
+                        Console.WriteLine(@"The command was succesfully sent. The Router is being rebooted.");
                     else
-                        Console.WriteLine(@"There was a problem and the Router was not successfully rebooted...");
+                        Console.WriteLine(@"There was a problem and the Router was NOT successfully rebooted.");
                 }
                 else
-                    Console.WriteLine(@"A problem happened and we're not going to try telnetting...");
+                    Console.WriteLine(@"There was a problem when enabling telnet.");
             }
             else
                 Console.WriteLine($@"Network Connectivity was Verified! A Successful Ping Response was received from {Settings.DestinationPingAddress}");
@@ -39,53 +45,12 @@ namespace RebootNetgearRouter
             Console.ReadLine();
         }
 
-        /*public static bool RebootRouter()
-        {
-            var fileName = "telnet.exe";
-            var telnetProcessConfig = new ProcessStartInfo
-            {
-                FileName = "cmd.exe",
-                Arguments = $"/c DIR {fileName} {Settings.RouterIPAddress}",
-                UseShellExecute = false,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true
-            };
-            Process telnetCommand = new Process { StartInfo = telnetProcessConfig };
-
-            Console.WriteLine($@"Executing the Command: {telnetProcessConfig.FileName} {telnetProcessConfig.Arguments}");
-            telnetCommand.Start();
-            var output = telnetCommand.StandardOutput.ReadToEnd();
-            Console.WriteLine($@"Response Recieved: {output}");
-            var err = telnetCommand.StandardError.ReadToEnd();
-            if (!string.IsNullOrEmpty(err))
-                Console.WriteLine($@"The following error was encountered during the command execution: {err}");
-            telnetCommand.WaitForExit();
-
-            if (output.Contains("#"))
-            {
-                telnetCommand.StandardInput.WriteLine("reboot");
-                return true;
-            }
-            return false;
-        }*/
-
         public static bool RebootRouter()
         {
-            //create a new telnet connection to hostname "gobelijn" on port "23"
             TelnetConnection tc = new TelnetConnection(Settings.RouterIPAddress, 23);
 
             var response = tc.Read();
             Console.WriteLine(response);
-
-            //login with user "root",password "rootpassword", using a timeout of 100ms, and show server output
-            //string s = tc.Login(Settings.RouterUserName, Settings.RouterPassword, 100);
-            //Console.Write(s);
-
-            // server output should end with "$" or ">" or "#", otherwise the connection failed
-            //string prompt = s.TrimEnd();
-            //prompt = s.Substring(prompt.Length - 1, 1);
-            //if (prompt != "$" || prompt != ">" || prompt != "#")
-            //    throw new Exception("Connection failed");
 
             if (tc.IsConnected)
             {
@@ -99,6 +64,8 @@ namespace RebootNetgearRouter
         {
             var telnetEnable = RebootNetgearRouter.Properties.Resources.telnetEnable;
             var fileName = System.Environment.CurrentDirectory + "\\telnetenable.exe";
+
+            Console.WriteLine($@"Creating {fileName}...");
             WriteByteArrayToFile(telnetEnable, fileName);
 
             var telnetEnableProcessConfig =
@@ -106,7 +73,6 @@ namespace RebootNetgearRouter
                 {
                     FileName = fileName,
                     UseShellExecute = false,
-                    //WindowStyle = ProcessWindowStyle.Hidden,
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
                     Arguments = $"{Settings.RouterIPAddress} {Settings.RouterMACAddress} {Settings.RouterUserName} {Settings.RouterPassword}"
@@ -122,6 +88,7 @@ namespace RebootNetgearRouter
                 Console.WriteLine($@"The following error was encountered during the command execution: {err}");
             telnetEnableCommand.WaitForExit();
 
+            Console.WriteLine($@"Removing {fileName}...");
             File.Delete(fileName);
 
             if (output.ToUpper().Contains("TELNET SHOULD BE ENABLED"))
