@@ -23,6 +23,8 @@ Inside of App.config you need to specify:
 	"RouterUserName" which is the admin username of the Router that you are looking to unlock Telnet.
 	
 	"Routerpassword" which is the password for the RouterUserName.
+	
+	"TelnetPort" the port to use for telnetting into the router. If an invalid value is supplied, then the default of 23 will be used.
 
 Sample execution of telnetenable.exe:
 

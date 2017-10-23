@@ -14,6 +14,7 @@ namespace RebootNetgearRouter
         public static string RouterMACAddress => ConfigurationManager.AppSettings["RouterMACAddress"];
         public static string RouterUserName => ConfigurationManager.AppSettings["RouterUserName"];
         public static string RouterPassword => ConfigurationManager.AppSettings["RouterPassword"];
+        public static string TelnetPort => ConfigurationManager.AppSettings["TelnetPort"];
         public static string DestinationPingAddress => ConfigurationManager.AppSettings["DestinationPingAddress"];
     }
 }

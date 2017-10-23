@@ -47,7 +47,13 @@ namespace RebootNetgearRouter
 
         public static bool RebootRouter()
         {
-            TelnetConnection tc = new TelnetConnection(Settings.RouterIPAddress, 23);
+            TelnetConnection tc;
+            var properPortSpecified = int.TryParse(Settings.TelnetPort, out int telnetPort);
+
+            if (properPortSpecified)
+                tc = new TelnetConnection(Settings.RouterIPAddress, telnetPort);
+            else
+                tc = new TelnetConnection(Settings.RouterIPAddress, 23);
 
             var response = tc.Read();
             Console.WriteLine(response);
