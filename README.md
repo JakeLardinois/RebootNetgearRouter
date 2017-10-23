@@ -7,8 +7,11 @@ Much of the information gleaned for this application was taken from the article 
 
 But basically what this application will do is to ping an IP address to check for network connectivity.  If it does not recieve a successful response,
 then it will spit out the executable created from this repo https://github.com/insanid/NetgearTelnetEnable, 
-in particular this executable https://github.com/insanid/NetgearTelnetEnable/blob/master/binaries/windows/telnetEnable.exe and then telnet
-into the Netgear router and issue a reboot command.
+in particular this executable https://github.com/insanid/NetgearTelnetEnable/blob/master/binaries/windows/telnetEnable.exe and then telnets
+into the Netgear router to issue a reboot command.
+
+The telnet client used by this application was initially created by Tom Janssens and is detailed https://www.codeproject.com/Articles/19071/Quick-tool-A-minimalistic-Telnet-library.  Some other repos
+to check out in github regarding this functionality are: https://github.com/jonsagara/MinimalisticTelnet & https://github.com/aaron-salisbury/MinimalisticTelnet
 
 The application is intended to run in a scheduled task on a windows machine and periodically execute to monitor network connectivity
 
