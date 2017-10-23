@@ -45,6 +45,7 @@ namespace RebootNetgearRouter
             Console.ReadLine();
         }
 
+        //#ToDo specify a username and password to use when telnetting into router
         public static bool RebootRouter()
         {
             TelnetConnection tc;
