@@ -10,6 +10,7 @@ namespace RebootNetgearRouter
     public static class Settings
     {
         //public static string ConnectionString => ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
+        public static string RouterIPAddress => ConfigurationManager.AppSettings["RouterIPAddress"];
         public static string RouterMACAddress => ConfigurationManager.AppSettings["RouterMACAddress"];
         public static string RouterUserName => ConfigurationManager.AppSettings["RouterUserName"];
         public static string RouterPassword => ConfigurationManager.AppSettings["RouterPassword"];
